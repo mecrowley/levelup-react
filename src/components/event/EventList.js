@@ -30,6 +30,7 @@ export const EventList = (props) => {
                             }
                             @ {event.time}
                         </div>
+                        <div>Attendees: {event.attendees.length}</div>
                     </section>
                 })
             }
