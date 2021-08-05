@@ -4,7 +4,7 @@ import { GameContext } from "./GameProvider.js"
 
 export const GameList = (props) => {
     const { games, getGames } = useContext(GameContext)
-    const { history } = useHistory()
+    const history = useHistory()
 
     useEffect(() => {
         getGames()

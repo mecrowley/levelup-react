@@ -3,11 +3,11 @@ import React, { useState } from "react"
 export const EventContext = React.createContext()
 
 export const EventProvider = (props) => {
-    const [ events, setEvents ] = useState([])
+    const [events, setEvents] = useState([])
 
     const getEvents = () => {
         return fetch("http://localhost:8000/events", {
-            headers:{
+            headers: {
                 "Authorization": `Token ${localStorage.getItem("lu_token")}`
             }
         })
@@ -15,9 +15,21 @@ export const EventProvider = (props) => {
             .then(setEvents)
     }
 
+    const createEvent = (event) => {
+        return fetch("http://localhost:8000/events", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Token ${localStorage.getItem("lu_token")}`
+            },
+            body: JSON.stringify(event)
+        })
+            .then(response => response.json())
+    }
+
     return (
-        <EventContext.Provider value={{ events, getEvents }} >
-            { props.children }
+        <EventContext.Provider value={{ events, getEvents, createEvent }} >
+            {props.children}
         </EventContext.Provider>
     )
 }

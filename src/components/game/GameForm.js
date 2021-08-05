@@ -62,9 +62,9 @@ export const GameForm = () => {
 
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="game_type">Game Type: </label>
-                    <select name="game_type" id="game_type" className="form-control"
-                        value={currentGame.game_type}
+                    <label htmlFor="gameTypeId">Game Type: </label>
+                    <select name="gameTypeId" id="gameTypeId" className="form-control"
+                        value={currentGame.gameTypeId}
                         onChange={changeGameState}
                     >
                         <option value="0">Choose Type</option>
@@ -87,18 +87,18 @@ export const GameForm = () => {
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="number_of_players">Number of Players: </label>
-                    <input type="number" min="2" max="20" name="number_of_players" required autoFocus className="form-control"
-                        value={currentGame.number_of_players}
+                    <label htmlFor="numberOfPlayers">Number of Players: </label>
+                    <input type="number" min="2" max="20" name="numberOfPlayers" required autoFocus className="form-control"
+                        value={currentGame.numberOfPlayers}
                         onChange={changeGameState}
                     />
                 </div>
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="number_of_players">Skill Level: </label>
-                    <input type="skill_level" min="1" max="10" name="skill_level" required autoFocus className="form-control"
-                        value={currentGame.skill_level}
+                    <label htmlFor="skillLevel">Skill Level: </label>
+                    <input type="number" min="1" max="10" name="skillLevel" required autoFocus className="form-control"
+                        value={currentGame.skillLevel}
                         onChange={changeGameState}
                     />
                 </div>
