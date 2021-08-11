@@ -1,11 +1,13 @@
 import React, { useContext, useState, useEffect } from "react"
 import { GameContext } from "./GameProvider.js"
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 
 
 export const GameForm = () => {
     const history = useHistory()
-    const { createGame, getGameTypes, gameTypes } = useContext(GameContext)
+    const { gameId } = useParams()
+    const [isEdit, setIsEdit] = useState(false)
+    const { getSingleGame, createGame, updateGame, getGameTypes, gameTypes } = useContext(GameContext)
 
     /*
         Since the input fields are bound to the values of
@@ -26,6 +28,23 @@ export const GameForm = () => {
     */
     useEffect(() => {
         getGameTypes()
+    }, [])
+
+    useEffect(() => {
+        if (gameId) {
+            getSingleGame(parseInt(gameId))
+                .then(game => {
+                    setCurrentGame({
+                        id: game.id,
+                        skillLevel: game.skill_level,
+                        numberOfPlayers: game.number_of_players,
+                        title: game.title,
+                        maker: game.maker,
+                        gameTypeId: game.game_type.id
+                    })
+                })
+                .then(() => setIsEdit(true))
+        }
     }, [])
 
     /*
@@ -117,11 +136,16 @@ export const GameForm = () => {
                         gameTypeId: parseInt(currentGame.gameTypeId)
                     }
 
-                    // Send POST request to your API
-                    createGame(game)
-                        .then(() => history.push("/games"))
+                    if (isEdit) {
+                        game.id = currentGame.id
+                        updateGame(game)
+                            .then(() => history.push("/games"))
+                    } else {
+                        createGame(game)
+                            .then(() => history.push("/games"))
+                    }
                 }}
-                className="btn-primary">Create</button>
+                className="btn-primary">{isEdit ? 'Update' : 'Create'}</button>
         </form>
     )
 }
